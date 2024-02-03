@@ -14,7 +14,7 @@ function postedAt(date) {
     } if (diffMinutes > 0) {
         return `${diffMinutes} menit lalu`;
     } if (diffSeconds > 0) {
-        return `${diffSeconds} detik ago`;
+        return `${diffSeconds} detik lalu`;
     }
     return 'just now';
 }
