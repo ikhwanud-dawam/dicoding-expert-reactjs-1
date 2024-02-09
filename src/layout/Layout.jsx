@@ -1,14 +1,13 @@
-import { Outlet, ScrollRestoration } from "react-router-dom"
+import { Outlet, ScrollRestoration } from "react-router-dom";
+import Loading from "../components/Loading";
 
 export default function Layout() {
   return (
     <div>
-      <h1>Testing Judul</h1>
-      <p>Ini buat komponen header</p>
-
+      <Loading />
       <Outlet />
 
       <ScrollRestoration />
     </div>
-  )
+  );
 }
