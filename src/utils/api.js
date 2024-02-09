@@ -1,5 +1,5 @@
 const api = (() => {
-  const BASE_URL = 'https://forum-api.dicoding.dev/v1'
+  const BASE_URL = 'https://forum-api.dicoding.dev/v1';
 
   function putAccessToken(token) {
     localStorage.setItem('accessToken', token);
@@ -27,8 +27,8 @@ const api = (() => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, email, password })
-    })
+      body: JSON.stringify({ name, email, password }),
+    });
 
     const responseJson = await response.json();
     const { status, message } = responseJson;
@@ -48,8 +48,8 @@ const api = (() => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password })
-    })
+      body: JSON.stringify({ email, password }),
+    });
 
     const responseJson = await response.json();
     const { status, message } = responseJson;
@@ -64,9 +64,9 @@ const api = (() => {
   }
 
   async function getAllUsers() {
-    const response = await fetch(`${BASE_URL}/users`)
+    const response = await fetch(`${BASE_URL}/users`);
 
-    const responseJson = await response.json()
+    const responseJson = await response.json();
     const { status, message } = responseJson;
 
     if (status !== 'success') {
@@ -79,9 +79,9 @@ const api = (() => {
   }
 
   async function getOwnProfile() {
-    const response = await _fetchWithAuth(`${BASE_URL}/users/me`)
+    const response = await _fetchWithAuth(`${BASE_URL}/users/me`);
 
-    const responseJson = await response.json()
+    const responseJson = await response.json();
     const { status, message } = responseJson;
 
     if (status !== 'success') {
@@ -105,14 +105,14 @@ const api = (() => {
         title,
         body,
         category,
-      })
-    })
+      }),
+    });
 
     const responseJson = await response.json();
     const { status, message } = responseJson;
 
     if (status !== 'success') {
-      throw new Error(message)
+      throw new Error(message);
     }
 
     const { data: { thread } } = responseJson;
@@ -121,9 +121,9 @@ const api = (() => {
   }
 
   async function seeAllThreads() {
-    const response = await fetch(`${BASE_URL}/threads`)
+    const response = await fetch(`${BASE_URL}/threads`);
 
-    const responseJson = await response.json()
+    const responseJson = await response.json();
     const { status, message } = responseJson;
 
     if (status !== 'success') {
@@ -136,9 +136,9 @@ const api = (() => {
   }
 
   async function seeDetailThread(id) {
-    const response = await fetch(`${BASE_URL}/threads/${id}`)
+    const response = await fetch(`${BASE_URL}/threads/${id}`);
 
-    const responseJson = await response.json()
+    const responseJson = await response.json();
     const { status, message } = responseJson;
 
     if (status !== 'success') {
@@ -159,20 +159,20 @@ const api = (() => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        content
-      })
-    })
+        content,
+      }),
+    });
 
     const responseJson = await response.json();
     const { status, message } = responseJson;
 
     if (status !== 'success') {
-      throw new Error(message)
+      throw new Error(message);
     }
 
     const { data: { comment } } = responseJson;
 
-    return comment
+    return comment;
   }
 
   // Votes Endpoints
@@ -183,18 +183,18 @@ const api = (() => {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    });
 
     const responseJson = await response.json();
     const { status, message } = responseJson;
 
     if (status !== 'success') {
-      throw new Error(message)
+      throw new Error(message);
     }
 
     const { data: { vote } } = responseJson;
 
-    return vote
+    return vote;
   }
 
   async function downVoteThread(threadId) {
@@ -203,18 +203,18 @@ const api = (() => {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    });
 
     const responseJson = await response.json();
     const { status, message } = responseJson;
 
     if (status !== 'success') {
-      throw new Error(message)
+      throw new Error(message);
     }
 
     const { data: { vote } } = responseJson;
 
-    return vote
+    return vote;
   }
 
   async function neutralizeVoteThread(threadId) {
@@ -223,18 +223,18 @@ const api = (() => {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    });
 
     const responseJson = await response.json();
     const { status, message } = responseJson;
 
     if (status !== 'success') {
-      throw new Error(message)
+      throw new Error(message);
     }
 
     const { data: { vote } } = responseJson;
 
-    return vote
+    return vote;
   }
 
   async function upVoteComment({ threadId, commentId }) {
@@ -243,18 +243,18 @@ const api = (() => {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    });
 
     const responseJson = await response.json();
     const { status, message } = responseJson;
 
     if (status !== 'success') {
-      throw new Error(message)
+      throw new Error(message);
     }
 
     const { data: { vote } } = responseJson;
 
-    return vote
+    return vote;
   }
 
   async function downVoteComment({ threadId, commentId }) {
@@ -263,18 +263,18 @@ const api = (() => {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    });
 
     const responseJson = await response.json();
     const { status, message } = responseJson;
 
     if (status !== 'success') {
-      throw new Error(message)
+      throw new Error(message);
     }
 
     const { data: { vote } } = responseJson;
 
-    return vote
+    return vote;
   }
 
   async function neutralizeVoteComment({ threadId, commentId }) {
@@ -283,18 +283,18 @@ const api = (() => {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    });
 
     const responseJson = await response.json();
     const { status, message } = responseJson;
 
     if (status !== 'success') {
-      throw new Error(message)
+      throw new Error(message);
     }
 
     const { data: { vote } } = responseJson;
 
-    return vote
+    return vote;
   }
 
   // Leaderboards Endpoints
@@ -306,12 +306,12 @@ const api = (() => {
     const { status, message } = responseJson;
 
     if (status !== 'success') {
-      throw new Error(message)
+      throw new Error(message);
     }
 
     const { data: { leaderboards } } = responseJson;
 
-    return leaderboards
+    return leaderboards;
   }
 
   return {
@@ -333,7 +333,7 @@ const api = (() => {
     downVoteComment,
     neutralizeVoteComment,
     seeLeaderboards,
-  }
-})()
+  };
+})();
 
-export default api
+export default api;
