@@ -133,6 +133,7 @@ export {
   addThreadActionCreator,
   toggleUpvoteThreadActionCreator,
   toggleDownvoteThreadActionCreator,
+  neutralizeThreadVoteActionCreator,
   asyncAddThread,
   asyncToggleUpVoteThread,
   asyncToggleDownVoteThread,
