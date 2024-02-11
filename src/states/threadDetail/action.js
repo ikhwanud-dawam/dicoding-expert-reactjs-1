@@ -1,5 +1,6 @@
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import api from '../../utils/api';
+import { neutralizeThreadVoteActionCreator, toggleDownvoteThreadActionCreator, toggleUpvoteThreadActionCreator } from '../threads/action';
 
 const ActionType = {
   RECEIVE_THREAD_DETAIL: 'RECEIVE_THREAD_DETAIL',
@@ -37,7 +38,7 @@ function addThreadCommentActionCreator(detailComment) {
   };
 }
 
-function toggleUpvoteThreadActionCreator({ threadId, userId }) {
+function toggleUpvoteThreadDetailActionCreator({ threadId, userId }) {
   return {
     type: ActionType.UPVOTE_THREAD_DETAIL,
     payload: {
@@ -47,7 +48,7 @@ function toggleUpvoteThreadActionCreator({ threadId, userId }) {
   };
 }
 
-function toggleDownvoteThreadActionCreator({ threadId, userId }) {
+function toggleDownvoteThreadDetailActionCreator({ threadId, userId }) {
   return {
     type: ActionType.DOWNVOTE_THREAD_DETAIL,
     payload: {
@@ -57,7 +58,7 @@ function toggleDownvoteThreadActionCreator({ threadId, userId }) {
   };
 }
 
-function neutralizeThreadVoteActionCreator({ threadId, userId }) {
+function neutralizeThreadDetailVoteActionCreator({ threadId, userId }) {
   return {
     type: ActionType.NEUTRALIZE_THREAD_DETAIL_VOTE,
     payload: {
@@ -133,13 +134,14 @@ function asyncToggleUpVoteThreadDetail(threadId) {
     dispatch(showLoading());
 
     const { authUser } = getState();
+    dispatch(toggleUpvoteThreadDetailActionCreator({ threadId, userId: authUser.id }));
     dispatch(toggleUpvoteThreadActionCreator({ threadId, userId: authUser.id }));
 
     try {
       await api.upVoteThread(threadId);
     } catch (error) {
       alert(error.message);
-      dispatch(toggleUpvoteThreadActionCreator({ threadId, userId: authUser.id }));
+      dispatch(toggleUpvoteThreadDetailActionCreator({ threadId, userId: authUser.id }));
     }
 
     dispatch(hideLoading());
@@ -151,31 +153,33 @@ function asyncToggleDownVoteThreadDetail(threadId) {
     dispatch(showLoading());
 
     const { authUser } = getState();
+    dispatch(toggleDownvoteThreadDetailActionCreator({ threadId, userId: authUser.id }));
     dispatch(toggleDownvoteThreadActionCreator({ threadId, userId: authUser.id }));
 
     try {
       await api.downVoteThread(threadId);
     } catch (error) {
       alert(error.message);
-      dispatch(toggleDownvoteThreadActionCreator({ threadId, userId: authUser.id }));
+      dispatch(toggleDownvoteThreadDetailActionCreator({ threadId, userId: authUser.id }));
     }
 
     dispatch(hideLoading());
   };
 }
 
-function asyncNeutralizeThreadVoteDetail(threadId) {
+function asyncNeutralizeThreadDetailVote(threadId) {
   return async (dispatch, getState) => {
     dispatch(showLoading());
 
     const { authUser } = getState();
+    dispatch(neutralizeThreadDetailVoteActionCreator({ threadId, userId: authUser.id }));
     dispatch(neutralizeThreadVoteActionCreator({ threadId, userId: authUser.id }));
 
     try {
       await api.neutralizeVoteThread(threadId);
     } catch (error) {
       alert(error.message);
-      dispatch(neutralizeThreadVoteActionCreator({ threadId, userId: authUser.id }));
+      dispatch(neutralizeThreadDetailVoteActionCreator({ threadId, userId: authUser.id }));
     }
 
     dispatch(hideLoading());
@@ -241,17 +245,17 @@ export {
   ActionType,
   receiveThreadDetailActionCreator,
   addThreadCommentActionCreator,
-  toggleUpvoteThreadActionCreator,
-  toggleDownvoteThreadActionCreator,
-  neutralizeThreadVoteActionCreator,
+  toggleUpvoteThreadDetailActionCreator,
+  toggleDownvoteThreadDetailActionCreator,
+  neutralizeThreadDetailVoteActionCreator,
   toggleUpvoteCommentActionCreator,
   toggleDownvoteCommentActionCreator,
   neutralizeVoteCommentActionCreator,
-  asyncReceiveThreadDetail,
-  asyncAddThreadComment,
   asyncToggleUpVoteThreadDetail,
   asyncToggleDownVoteThreadDetail,
-  asyncNeutralizeThreadVoteDetail,
+  asyncNeutralizeThreadDetailVote,
+  asyncReceiveThreadDetail,
+  asyncAddThreadComment,
   asyncToggleUpVoteComment,
   asyncToggleDownVoteComment,
   asyncNeutralizeVoteComment,
