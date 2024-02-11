@@ -1,8 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Heading, Text, Link as ChakraLink, Flex, Box } from "@chakra-ui/react";
 import LoginInput from "../components/LoginInput";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncSetAuthUser } from "../states/authUser/action";
+import { useEffect } from "react";
+import { asyncPreloadProcess } from "../states/isPreload/action";
 
 function Login() {
+  const { authUser } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(asyncPreloadProcess());
+  }, [dispatch]);
+
+  const onLogin = ({ email, password }) => {
+    dispatch(asyncSetAuthUser({ email, password }));
+  };
+
+  if (authUser) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <Flex
       as="section"
@@ -24,7 +43,7 @@ function Login() {
         <Heading fontSize={"2xl"} mb={4} textAlign="center">
           Sign In
         </Heading>
-        <LoginInput />
+        <LoginInput login={onLogin} />
         <Text mt={4} textAlign="center">
           <ChakraLink as={Link} to={"/register"} color={"teal.500"}>
             Create new account?
