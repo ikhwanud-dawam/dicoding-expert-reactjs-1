@@ -1,4 +1,5 @@
-import React from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 import {
   FormControl,
   FormLabel,
@@ -6,28 +7,25 @@ import {
   Button,
   InputGroup,
   InputRightElement,
+  Box,
 } from "@chakra-ui/react";
 import useInput from "../hooks/useInput";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-export default function LoginInput() {
+export default function LoginInput({ login }) {
   const [email, onEmailChange] = useInput("");
   const [password, onPasswordChange] = useInput("");
 
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const handleClickVisibility = () => setShowPassword(!showPassword);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    alert(`Email: ${email}, Password: ${password}`);
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
+    <Box as="form">
       <FormControl mt={4} id="email" isRequired>
         <FormLabel>Email address</FormLabel>
         <Input
           type="email"
+          focusBorderColor="teal.400"
           value={email}
           onChange={onEmailChange}
           placeholder="n@example.com"
@@ -38,6 +36,7 @@ export default function LoginInput() {
         <InputGroup>
           <Input
             type={showPassword ? "text" : "password"}
+            focusBorderColor="teal.400"
             value={password}
             onChange={onPasswordChange}
           />
@@ -48,9 +47,20 @@ export default function LoginInput() {
           </InputRightElement>
         </InputGroup>
       </FormControl>
-      <Button w="full" mt="6" colorScheme="teal" variant="solid" type="submit">
+      <Button
+        w="full"
+        mt="6"
+        colorScheme="teal"
+        variant="solid"
+        type="button"
+        onClick={() => login({ email, password })}
+      >
         Sign In
       </Button>
-    </form>
+    </Box>
   );
 }
+
+LoginInput.propTypes = {
+  login: PropTypes.func.isRequired,
+};
